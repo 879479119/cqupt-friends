@@ -17,16 +17,28 @@
       <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
     </ul>
+    <a-b-c :age="da" ></a-b-c>
+    <button @click="c">click</button>
   </div>
 </template>
 
 <script>
+import Show from "./Show.vue"
 export default {
   name: 'hello',
   data () {
     return {
+    	da: 0,
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+  methods: {
+  	c(){
+  		this.da = 123
+    }
+  },
+  components: {
+  	ABC: Show
   }
 }
 </script>

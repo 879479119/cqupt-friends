@@ -1,25 +1,36 @@
 <template>
-    <div>
-      <p>123</p>
-      <a href="#">1212331</a>
-      <p>{{content}}</p>
-      <label>
-        <input type="text" v-model="content">
-      </label>
-      <p v-if="true">23333333</p>
-    </div>
+  <div>
+    <p>123</p>
+    <a href="#">1212331</a>
+    <p>{{content}}</p>
+    <label>
+      <input type="text" v-model="content">
+    </label>
+    <p v-if="true">23333333</p>
+    <ul v-for="item in todos">
+      <li :title="item.text" @click="p">{{item.text}}</li>
+    </ul>
+    <p>age: {{age}}</p>
+  </div>
 </template>
 
 <script>
   export default {
-  	name: 'show',
+//  	name: 'show1',
+    props: ['age'],
     data(){
   		return {
-  			content: 123
+  			content: (()=>{console.info(12222223);return 0})(),
+        todos: [
+          { text: '学习 JavaScript' },
+          { text: '学习 Vue' },
+          { text: '整个牛项目' }
+        ]
       }
     },
-    method: {
+    methods: {
       p(c){
+      	console.info(this.content)
         return c.length % 2
       },
     },
