@@ -10,7 +10,8 @@
     <ul v-for="item in todos">
       <li :title="item.text" @click="p">{{item.text}}</li>
     </ul>
-    <p>age: {{age}}</p>
+    <p>age: {{age | f}}</p>
+    <p>your: {{my_content}}</p>
   </div>
 </template>
 
@@ -28,11 +29,26 @@
         ]
       }
     },
+    watch: {
+    	age(){
+        this.content = "他改变了中国！"
+      }
+    },
+    computed: {
+    	my_content() {
+        return this.content + '233333333333'
+      }
+    },
     methods: {
       p(c){
       	console.info(this.content)
         return c.length % 2
       },
+    },
+    filters: {
+    	f(a){
+    		return a + 'OK!'
+      }
     },
     go(e){
     	console.info(e)
