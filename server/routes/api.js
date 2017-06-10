@@ -19,6 +19,13 @@ router.get('/specList', function(req, respond, next) {
 		respond.send(res)
 	})
 })
+router.get('/allSpecList', function(req, respond, next) {
+	let p = decodeURI(req.query.depart)
+	conn.query(`select * from class WHERE c_spec IN (
+		select s_name from special where depart = "${p}")`, (err, res)=>{
+		respond.send(res)
+	})
+})
 router.get('/classList', function(req, respond, next) {
 	let p = decodeURI(req.query.special)
 	conn.query('select * from class where c_spec =  "' +p+ '"', (err, res)=>{

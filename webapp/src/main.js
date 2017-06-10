@@ -6,6 +6,7 @@ import router from './router'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import './assets/normalize.css'
+import './assets/common.css'
 
 Vue.use(Element)
 Vue.config.productionTip = false
