@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="body">
     <p>123</p>
     <a href="#">1212331</a>
-    <p>{{content}}</p>
+    <p class="go">{{content}}</p>
     <label>
       <input type="text" v-model="content">
     </label>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
 //  	name: 'show1',
     props: ['age'],
@@ -38,6 +39,12 @@
     	my_content() {
         return this.content + '233333333333'
       }
+    },
+    mounted(){
+    	console.info(1233)
+      axios.get('/api/departList').then(res=>{
+      	console.info(res)
+      })
     },
     methods: {
       p(c){
@@ -65,8 +72,14 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   p{
     background: #00B7FF;
+  }
+  .body{
+
+    .go{
+      background: #42b983;
+    }
   }
 </style>
