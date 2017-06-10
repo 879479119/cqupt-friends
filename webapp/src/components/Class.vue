@@ -2,16 +2,18 @@
   <div class="students">
     <h2>{{cls}}</h2>
     <section>
-      <el-table :data="array" stripe style="width: 100%" @click="click">
-        <el-table-column prop="id" label="ID" width="180"></el-table-column>
-        <el-table-column prop="s_class" label="班级" width="180"></el-table-column>
-        <el-table-column prop="s_name" label="姓名" width="180"></el-table-column>
-        <el-table-column prop="s_num" label="学号" width="180"></el-table-column>
-        <el-table-column prop="s_sex" label="性别" width="180"></el-table-column>
-        <el-table-column prop="s_status" label="学籍状态" width="180"></el-table-column>
-      </el-table>
+      <table class="table">
+        <tr v-for="(item, index) in array" :key="index">
+          <td>{{item.id}}</td>
+          <td>{{item.s_num}}</td>
+          <td>{{item.s_name}}</td>
+          <td>{{item.s_sex}}</td>
+          <td>{{item.s_status}}</td>
+          <td>{{+ item.r_count}}</td>
+          <td><router-link :to="'/student/'+item.s_num">详情</router-link></td>
+        </tr>
+      </table>
     </section>
-
   </div>
 </template>
 
@@ -23,7 +25,6 @@
       return {
         cls: '',
         array: []
-
       }
     },
     mounted(){
@@ -44,9 +45,21 @@
   .students{
     background: #f3f3f3;
     table{
-      margin: 0 auto;
-      div{
-        text-align: center;
+
+      tr{
+        padding: 10px;
+        td{
+          width: 100px;
+          margin: 10px;
+          a{
+            text-decoration: none;
+            color: #00bfff;
+          }
+        }
+      }
+      tr:nth-child(odd){
+        background: #fff;
+
       }
     }
   }

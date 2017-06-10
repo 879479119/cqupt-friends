@@ -38,6 +38,15 @@ router.get('/fellowList', function(req, respond, next) {
 		respond.send(res)
 	})
 })
+router.get('/student', function(req, respond, next) {
+	let p = decodeURI(req.query.stu)
+	conn.query('select * from student where s_num = "' +p+ '"', (err, res0)=>{
+
+		conn.query(`SELECT * FROM class , special WHERE c_spec = s_name AND c_name = "${res0[0].s_class}"`, (err, res1)=>{
+			respond.send(Object.assign({}, res1[0], res0[0]))
+		})
+	})
+})
 
 /**
  * change user state
@@ -59,8 +68,6 @@ router.get('/getRandomByClass', function(req, respond, next) {
 			users.push(res.splice((Math.random()*res.length) >>> 0, 1)[0]['s_num'])
 		}
 
-		console.info(users)
-
 		return new Promise((resolve, reject)=>{
 			let str = 'insert into random VALUES '
 			let d = new Date().getTime()
@@ -68,7 +75,6 @@ router.get('/getRandomByClass', function(req, respond, next) {
 				str += `(NULL, ${item}, '${d}'),`
 			})
 			str = str.slice(0,-1)
-			console.info(str)
 			conn.query(str, (err, res)=>{
 				if(err) console.info(err)
 				respond.send({

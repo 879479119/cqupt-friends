@@ -18,4 +18,11 @@ export default {
       }
     })
   },
+  getStudent(stu){
+    return axios.get('/api/student', {
+      params: {
+        stu
+      }
+    })
+  },
 }
