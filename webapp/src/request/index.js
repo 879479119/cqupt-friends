@@ -11,4 +11,11 @@ export default {
       }
     })
   },
+  getClassMember(cls){
+    return axios.get('/api/fellowList', {
+      params: {
+        cls
+      }
+    })
+  },
 }

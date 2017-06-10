@@ -33,7 +33,7 @@ router.get('/classList', function(req, respond, next) {
 	})
 })
 router.get('/fellowList', function(req, respond, next) {
-	let p = decodeURI(req.query.class)
+	let p = decodeURI(req.query.cls)
 	conn.query('select * from student where s_class = "' +p+ '"', (err, res)=>{
 		respond.send(res)
 	})
