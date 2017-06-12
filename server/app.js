@@ -9,16 +9,11 @@ let mysql = require('mysql')
 let routes = require('./routes/index');
 let users = require('./routes/users');
 let api = require('./routes/api');
+let database = require('./database')
 
 let app = express();
 
-global.conn = mysql.createPool({
-	user: 'root',
-	password: '123456',
-	host: '120.24.49.153',
-	port: '3306',
-	database: 'mydata'
-})
+global.conn = mysql.createPool(database)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

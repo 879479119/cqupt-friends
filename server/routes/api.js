@@ -75,14 +75,18 @@ router.get('/getRandomByClass', function(req, respond, next) {
 			let str = 'insert into random VALUES '
 			let d = new Date().getTime()
 			users.map((item, index)=>{
-				str += `(NULL, ${item}, '${d}'),`
+				str += `(NULL, ${item}, '${d}', 0),`
+				conn.query(`UPDATE student SET r_count = r_count + 1 WHERE s_num = ${item}`, (err, res1)=>{
+					console.info('update' + item)
+				})
 			})
 			str = str.slice(0,-1)
 			conn.query(str, (err, res0)=>{
 				if(err) console.info(err)
 				respond.send({
 					code: 100,
-					data: feedback
+					data: feedback,
+					_: '' + d
 				})
 			})
 		})
@@ -91,6 +95,28 @@ router.get('/getRandomByClass', function(req, respond, next) {
 			code: 0,
 			msg: error
 		})
+	})
+})
+
+router.get('/updatePresent', function(req, respond, next) {
+	let _ = req.query._
+	let list = req.query.list.split(',').map(t=>+t)
+	console.info(_, list)
+
+	for(let i = 0;i < list.length;i ++){
+		((i)=>{
+			conn.query(`UPDATE random SET r_present = 1 WHERE s_num = ${list[i]} AND r_date = "${_}"; `, (err, res0)=>{
+				if(err) console.info(err)
+
+			})
+			conn.query(`UPDATE student SET r_present = r_present + 1 WHERE s_num = ${list[i]}`, (err, res0)=>{
+				if(err) console.info(err)
+
+			})
+		})(i)
+	}
+	respond.send({
+		code: 100
 	})
 })
 
