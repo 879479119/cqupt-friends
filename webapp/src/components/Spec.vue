@@ -13,7 +13,7 @@
         <el-collapse-item v-for="(item, index) in showData" :key="index" :title="item.spec" :name="index">
           <template v-for="(t, i) in item.classes" >
             <br v-if="chkGrade(t.name, i)">
-            <router-link :to="'/classList/'+t.name" :key="i">
+            <router-link :to="'/class/'+t.name" :key="i">
               <el-tag :type="typeByGrade(t.name)">
                 {{t.name}}<span>({{t.count}})</span>
               </el-tag>
