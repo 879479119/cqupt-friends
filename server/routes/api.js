@@ -56,16 +56,19 @@ router.get('/getRandomByClass', function(req, respond, next) {
 	let p = req.query.class
 	let num = req.query.num
 	new Promise((resolve, reject)=>{
-		conn.query('select s_num from student where s_class = "' +p+ '"', (err, res)=>{
+		conn.query('select * from student where s_class = "' +p+ '"', (err, res)=>{
 			// respond.send(res)
 			resolve(res)
 		})
 	}).then(res => {
 		if(res.length === 0) throw Error(0)
 		if(res.length < num) throw Error(0)
-		let users = []
+		let users = [], feedback = []
 		for(let i = 0;i < num;i ++){
-			users.push(res.splice((Math.random()*res.length) >>> 0, 1)[0]['s_num'])
+			let index = (Math.random()*res.length) >>> 0,
+				data = res.splice(index, 1)[0]
+			users.push(data['s_num'])
+			feedback.push(data)
 		}
 
 		return new Promise((resolve, reject)=>{
@@ -75,11 +78,11 @@ router.get('/getRandomByClass', function(req, respond, next) {
 				str += `(NULL, ${item}, '${d}'),`
 			})
 			str = str.slice(0,-1)
-			conn.query(str, (err, res)=>{
+			conn.query(str, (err, res0)=>{
 				if(err) console.info(err)
 				respond.send({
 					code: 100,
-					data: users
+					data: feedback
 				})
 			})
 		})
