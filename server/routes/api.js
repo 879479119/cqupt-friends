@@ -41,10 +41,15 @@ router.get('/fellowList', function(req, respond, next) {
 router.get('/student', function(req, respond, next) {
 	let p = decodeURI(req.query.stu)
 	conn.query('select * from student where s_num = "' +p+ '"', (err, res0)=>{
-
 		conn.query(`SELECT * FROM class , special WHERE c_spec = s_name AND c_name = "${res0[0].s_class}"`, (err, res1)=>{
 			respond.send(Object.assign({}, res1[0], res0[0]))
 		})
+	})
+})
+router.get('/randomDetails', function(req, respond, next) {
+	let p = decodeURI(req.query.stu)
+	conn.query(`SELECT * FROM random WHERE s_num = ${p}`, (err, res0)=>{
+		respond.send(res0)
 	})
 })
 

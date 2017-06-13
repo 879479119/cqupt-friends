@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import Element from 'element-ui'
+import "./helper/filters"
 import 'element-ui/lib/theme-default/index.css'
 import './assets/normalize.css'
 import './assets/common.css'

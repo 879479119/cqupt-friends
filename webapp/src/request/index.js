@@ -25,4 +25,11 @@ export default {
       }
     })
   },
+  getRandomDetails(stu){
+    return axios.get('/api/randomDetails', {
+      params: {
+        stu
+      }
+    })
+  },
 }
