@@ -2,6 +2,11 @@
   <div class="students">
     <h2>{{cls}}</h2>
     <section>
+      <section>
+        <percentage :percentages="present" title="旷到人数比例"></percentage>
+        <percentage :percentages="absence" title="全班旷到次数"></percentage>
+        <percentage :percentages="ppp" title="全班被点次数"></percentage>
+      </section>
       <table class="table">
         <tr>
           <th>ID</th>
@@ -24,7 +29,6 @@
           <td><router-link :to="'/student/'+item.s_num">详情</router-link></td>
         </tr>
       </table>
-      <percentage :percentages="present"></percentage>
     </section>
   </div>
 </template>
@@ -45,6 +49,15 @@
     },
     computed: {
     	present(){
+    		if(this.array.length === 0){
+          return [{
+            text: "旷到记录",
+            count: 50
+          },{
+            text: "从未旷到",
+            count: 50
+          }]
+        }
     		let a = 0, b = 0
     		this.array.map((item, index)=>{
     			if(item.r_count > item.r_present){
@@ -60,6 +73,48 @@
           text: "从未旷到",
     			count: 100 * b / this.array.length
         }]
+      },
+      absence(){
+        if(this.array.length === 0){
+          return [{
+            text: "旷到记录",
+            count: 50
+          },{
+            text: "从未旷到",
+            count: 50
+          }]
+        }
+        let k = new Array(5).fill(0)
+        this.array.map((item, index)=>{
+        	let p = item.r_present
+          if(p >= 4) p = 4
+          k[p] += 1
+        })
+        return k.map((t, i)=>{
+        	return {
+        		text: i + '次',
+            count: t * 100 / this.array.length
+          }
+        })
+      },
+      ppp(){
+        if(this.array.length === 0){
+          return [{
+            text: "旷到记录",
+            count: 100
+          }]
+        }
+        let k = new Array(6).fill(0)
+        this.array.map((item, index)=>{
+        	let p = item.r_count
+          k[(p / 2) >>> 0] += 1
+        })
+        return k.map((t, i)=>{
+        	return {
+        		text: i * 2 +'-'+ (i * 2 + 1) + '次',
+            count: t * 100 / this.array.length
+          }
+        })
       }
     },
     mounted(){
@@ -87,8 +142,8 @@
       }
       tr{
         padding: 4px;
-        &:hover{
-          background: #969696;
+        &:not(:first-child):hover{
+          background: #ddd;
         }
         th,td{
           max-width: 100px;

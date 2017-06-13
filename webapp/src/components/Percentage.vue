@@ -1,13 +1,16 @@
 <template>
   <div class="percentage">
     <svg width="400" height="400">
+      <g transform="translate(140,60)">
+        <text font-size="20">{{title}}</text>
+      </g>
       <g>
         <path v-for="(item, index) in paths" :key="index" :d="item.path" stroke-width="40" fill="transparent" :stroke="item.color" :transform="`rotate(${item.rotate})`"></path>
       </g>
       <g>
-        <g v-for="(item, index) in paths" :key="index" :transform="`translate(${index*120+100}, 320)`">
+        <g v-for="(item, index) in paths" :key="index" :transform="`translate(${(index % 3)*100+80}, ${320 + (index > 2 ? 30 : 0)})`">
           <rect width="20" height="20" :fill="item.color"></rect>
-          <text fill="#555" x="30" y="16">{{item.text}}</text>
+          <text fill="#555" :x="30" :y="16">{{item.text}}</text>
         </g>
       </g>
     </svg>
@@ -17,14 +20,14 @@
 <script>
 	export default {
 		name: '',
-		props: ['percentages'],
+		props: ['percentages', 'title'],
 		data(){
 			return {
       }
 		},
     computed: {
       paths(){
-      	let sum = 0, colors = ['#00caab', '#00bfff', 'orange', '#efefef']
+      	let sum = 0, colors = ['#00caab', '#00bfff', 'orange', '#ddd', 'pink', 'brown']
 
       	let r = 80, cx = 200, cy = 200
       	return this.percentages.map((item, index)=>{
